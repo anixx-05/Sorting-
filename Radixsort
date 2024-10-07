@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<conio.h>
+void Radixsort (int lI, int); void main O
+int x[20]. 1, ม;
+printi ("in Enter the no of element to be sorted:"); printf ("in Enter %d elements:", n):
+printf ("n The sorted array is: \n");
+for (i = 0; i <n; it +)
+printf ("%4d", xi]):
+Void Radixsort (int al], int n) int bucket[10][10], buck[10]; int i, j, k, 1, num, div, large, pass:
+div = 1;
+num = 0;
+large = a[0];
+for (i = 0; i <n; it+)
+{
+if (a[i] > large)
+large = a[1):
+}
+while (large > 0)
+{
+num = num + 1;
+large = large / 10;
+}
+for (pass = 0: pass < num; pass+ +)
+{
+for (k = 0; k < 10; k++)
+buck[k] = 0;
+for (i=0; i <n; it+)
+{
+1= (a[i] / div) % 10;
+bucket[1][buck[1]] = a[i]:
+i= 0:
+for (k = 0; k < 10; k++)
+for j= 0: j < buck[k]; j*
+a[i++] = bucket[k]D]:
+div = div * 10;
