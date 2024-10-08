@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<conio.h>
+void Selectionsort(int[J,int); void main
+int x[20],i,n;
+cirscrO:
+printf("\n Enter the no of element to be sorted scanf(*%d", &n):
+printf("|n Enter %d elements:",n):
+for(i=0;i<n;i++)
+scanf("%d", &x[il):
+Selectionsort(x,n);
+printf"n The sorted array is:\n"):
+for(i=0:i <nti++)
+printf("%4d".x[il):
+void Selectionsort(int a[],int n)
+int 1,j,pos,large;
+for(i=n- 1;i>0;i--)
+large=a[01;
+pos=0;
+1
+if (a[j)>large)
+large=a[jl:
+pos=j:
+a[pos]=a(i];
+a[i=large;
