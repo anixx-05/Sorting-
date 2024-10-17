@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<conio.h>
+
+void Quicksort(int[], int, int);
+int partition(int[], int, int);
+
+int main() {
+    int x[20], i, n;
+    printf("Enter the number of elements to be sorted: ");
+    scanf("%d", &n);
+    printf("Enter %d elements: ", n);
+    for (i = 0; i < n; i++) 
+        scanf("%d", &x[i]);
+    Quicksort(x, 0, n - 1);
+    printf("The sorted array is: \n");
+    for (i = 0; i < n; i++) 
+        printf("%d ", x[i]);
+    getch();
+    return 0;
+}
+
+void Quicksort(int a[], int p, int r) {
+    int q;
+    if (p < r) {
+        q = partition(a, p, r);
+        Quicksort(a, p, q);
+        Quicksort(a, q + 1, r);
+    }
+}
+
+int partition(int a[], int p, int r) {
+    int k, i, j, temp;
+    k = a[p];
+    i = p - 1;
+    j = r + 1;
+    while (1) {
+        do {
+            j = j - 1;
+        } while (a[j] > k);
+        do {
+            i = i + 1;
+        } while (a[i] < k);
+        if (i < j) {
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        } else {
+            return j;
+        }
+    }
+}
