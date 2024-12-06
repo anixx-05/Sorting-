@@ -1,0 +1,118 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+typedef struct list {
+    int no;
+    struct list *next;
+} LIST;
+
+LIST *p, *t, *h = NULL, *y, *ptr, *pt;
+int j, pos, k = 1, count;
+
+void create(void);
+void insert(void);
+void delet(void);
+void display(void);
+
+void main() {
+    int n, i = 1, opt;
+    p = NULL;
+
+    printf("Enter the number of nodes:\n");
+    scanf("%d", &n);
+    count = n;
+
+    while (i <= n) {
+        create();
+        i++;
+    }
+
+    do {
+        printf("\nEnter your option:\n");
+        printf("1. Insert\t2. Delete\t3. Display\t4. Exit\n");
+        scanf("%d", &opt);
+
+        switch (opt) {
+            case 1:
+                insert();
+                count++;
+                break;
+            case 2:
+                delet();
+                count--;
+                if (count == 0)
+                    break;
+                break;
+            case 3:
+                printf("List elements are:\n");
+                display();
+                break;
+        }
+    } while (opt != 4);
+
+    getch();
+}
+
+void create() {
+    if (h == NULL) {
+        p = (LIST *)malloc(sizeof(LIST));
+        printf("Enter the element:\n");
+        scanf("%d", &p->no);
+        p->next = NULL;
+        h = p;
+    } else {
+        t = (LIST *)malloc(sizeof(LIST));
+        printf("\nEnter the element:\n");
+        scanf("%d", &t->no);
+        t->next = NULL;
+        p->next = t;
+        p = t;
+    }
+}
+
+void insert() {
+    t = h;
+    p = (LIST *)malloc(sizeof(LIST));
+    printf("Enter the element to be inserted:\n");
+    scanf("%d", &p->no);
+    printf("Enter the position to insert:\n");
+    scanf("%d", &pos);
+
+    if (pos == 1) {
+        p->next = h;
+        h = p;
+    } else {
+        for (j = 1; j < pos - 1; j++) {
+            t = t->next;
+        }
+        p->next = t->next;
+        t->next = p;
+    }
+}
+
+void delet() {
+    printf("Enter the position to delete:\n");
+    scanf("%d", &pos);
+
+    if (pos == 1) {
+        h = h->next;
+    } else {
+        t = h;
+        for (j = 1; j < pos - 1; j++) {
+            t = t->next;
+        }
+        pt = t->next;
+        t->next = pt->next;
+        free(pt);
+    }
+}
+
+void display() {
+    t = h;
+    while (t->next != NULL) {
+        printf("\t%d", t->no);
+        t = t->next;
+    }
+    printf("\t%d\t", t->no);
+}
