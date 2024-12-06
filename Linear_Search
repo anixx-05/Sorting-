@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <conio.h>
+
+int Sequentialsearch(int a[], int n, int k);
+
+void main() {
+    int x[20], n, p, key, i;
+
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter %d elements: ", n);
+    for (i = 0; i < n; i++) {
+        scanf("%d", &x[i]);
+    }
+
+    printf("Enter the element to be searched: ");
+    scanf("%d", &key);
+
+    p = Sequentialsearch(x, n, key);
+    if (p == -1) {
+        printf("The search is unsuccessful.\n");
+    } else {
+        printf("%d is found at location %d.\n", key, p + 1); // Adding 1 for 1-based indexing.
+    }
+
+    getch();
+}
+
+int Sequentialsearch(int a[], int n, int k) {
+    int i;
+    for (i = 0; i < n; i++) {
+        if (a[i] == k) {
+            return i; // Return index if element is found.
+        }
+    }
+    return -1; // Return -1 if element is not found.
+}
