@@ -1,0 +1,149 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+typedef struct list {
+    int no;
+    struct list *next;
+    struct list *pre;
+} LIST;
+
+LIST *p, *t, *h; 
+void create(void);
+void insert(void);
+void delet(void);
+void display(void);
+
+int pos, count = 0;
+
+void main() {
+    int n, i = 1, opt;
+    p = NULL;
+
+    printf("Enter the number of nodes: \n");
+    scanf("%d", &n);
+    count = n;
+
+    while (i <= n) {
+        create();
+        i++;
+    }
+
+    do {
+        printf("\nEnter your option:\n");
+        printf("1. Insert\t2. Delete\t3. Display\t4. Exit\n");
+        scanf("%d", &opt);
+
+        switch (opt) {
+            case 1:
+                insert();
+                count++;
+                break;
+            case 2:
+                delet();
+                count--;
+                if (count == 0)
+                    printf("\nList is empty\n");
+                break;
+            case 3:
+                printf("List elements are:\n");
+                display();
+                break;
+            case 4:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid option. Try again.\n");
+        }
+    } while (opt != 4);
+
+    getch();
+}
+
+void create() {
+    if (p == NULL) {
+        p = (LIST *)malloc(sizeof(LIST));
+        printf("Enter the element:\n");
+        scanf("%d", &p->no);
+        p->next = NULL;
+        p->pre = NULL;
+        h = p;
+    } else {
+        t = (LIST *)malloc(sizeof(LIST));
+        printf("Enter the element:\n");
+        scanf("%d", &t->no);
+        t->next = NULL;
+        t->pre = p;
+        p->next = t;
+        p = t;
+    }
+}
+
+void insert() {
+    t = h;
+    p = (LIST *)malloc(sizeof(LIST));
+    printf("Enter the element to be inserted:\n");
+    scanf("%d", &p->no);
+    printf("Enter the position to insert:\n");
+    scanf("%d", &pos);
+
+    if (pos == 1) {
+        p->next = h;
+        p->pre = NULL;
+        h->pre = p;
+        h = p;
+    } else {
+        for (int j = 1; j < pos - 1; j++) {
+            if (t->next == NULL) {
+                printf("Position out of bounds.\n");
+                free(p);
+                return;
+            }
+            t = t->next;
+        }
+        p->next = t->next;
+        if (t->next != NULL)
+            t->next->pre = p;
+        t->next = p;
+        p->pre = t;
+    }
+}
+
+void delet() {
+    printf("Enter the position to delete:\n");
+    scanf("%d", &pos);
+
+    if (pos == 1) {
+        if (h == NULL) {
+            printf("List is empty.\n");
+            return;
+        }
+        t = h;
+        h = h->next;
+        if (h != NULL)
+            h->pre = NULL;
+        free(t);
+    } else {
+        t = h;
+        for (int j = 1; j < pos; j++) {
+            if (t == NULL) {
+                printf("Position out of bounds.\n");
+                return;
+            }
+            t = t->next;
+        }
+        if (t->next != NULL)
+            t->next->pre = t->pre;
+        if (t->pre != NULL)
+            t->pre->next = t->next;
+        free(t);
+    }
+}
+
+void display() {
+    t = h;
+    while (t != NULL) {
+        printf("%d\n", t->no);
+        t = t->next;
+    }
+}
