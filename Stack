@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#define MAXSTK 10
+
+int items[MAXSTK], top = -1;
+
+void Push(int x);
+int Pop(void);
+void Display(void);
+int IsEmpty(void);
+int IsFull(void);
+
+void main() {
+    int x, opt;
+    
+    while (1) {
+        printf("\n1. Push\t2. Pop\t3. Display\t4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &opt);
+
+        switch (opt) {
+            case 1:
+                printf("Enter the element to be pushed: ");
+                scanf("%d", &x);
+                Push(x);
+                break;
+            case 2:
+                x = Pop();
+                printf("\nPopped element is: %d\n", x);
+                break;
+            case 3:
+                Display();
+                break;
+            case 4:
+                exit(0);
+            default:
+                printf("\nWrong choice! Try again.\n");
+        }
+    }
+}
+
+int IsEmpty() {
+    if (top == -1)
+        return 1;
+    else
+        return 0;
+}
+
+int IsFull() {
+    if (top == MAXSTK - 1)
+        return 1;
+    else
+        return 0;
+}
+
+void Push(int x) {
+    if (IsFull()) {
+        printf("\nStack overflow! Cannot push.\n");
+        return;
+    }
+    top++;
+    items[top] = x;
+}
+
+int Pop() {
+    int x;
+    if (IsEmpty()) {
+        printf("\nStack underflow! Cannot pop.\n");
+        exit(0);
+    }
+    x = items[top];
+    top--;
+    return x;
+}
+
+void Display() {
+    int i;
+    if (IsEmpty()) {
+        printf("\nStack is empty.\n");
+        return;
+    }
+    printf("\nElements in the stack are:\n");
+    for (i = top; i >= 0; i--)
+        printf("%d\n", items[i]);
+}
