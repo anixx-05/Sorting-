@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#define MAXQ 100
+
+int front = 0, rear = -1;
+int items[MAXQ];
+
+int IsEmpty();
+int IsFull();
+void Insert(int x);
+int Delete();
+void Display();
+
+void main() {
+    int x, opt;
+
+    while (1) {
+        printf("\n1. Insert\t2. Delete\t3. Display\t4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &opt);
+
+        switch (opt) {
+            case 1:
+                printf("Enter the element to be inserted: ");
+                scanf("%d", &x);
+                Insert(x);
+                break;
+
+            case 2:
+                x = Delete();
+                printf("\nDeleted element is: %d\n", x);
+                break;
+
+            case 3:
+                Display();
+                break;
+
+            case 4:
+                exit(0);
+
+            default:
+                printf("\nWrong choice! Try again.\n");
+        }
+    }
+}
+
+int IsEmpty() {
+    if (rear < front)
+        return 1;
+    else
+        return 0;
+}
+
+int IsFull() {
+    if (rear == MAXQ - 1)
+        return 1;
+    else
+        return 0;
+}
+
+void Insert(int x) {
+    if (IsFull()) {
+        printf("\nQueue full!\n");
+        return;
+    }
+    rear++;
+    items[rear] = x;
+}
+
+int Delete() {
+    int x;
+    if (IsEmpty()) {
+        printf("\nQueue is empty!\n");
+        exit(0);
+    }
+    x = items[front];
+    front++;
+    return x;
+}
+
+void Display() {
+    int i;
+    if (IsEmpty()) {
+        printf("\nQueue is empty!\n");
+        return;
+    }
+    printf("\nElements in the Queue are:\n");
+    for (i = front; i <= rear; i++)
+        printf("%d\n", items[i]);
+}
