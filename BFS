@@ -1,59 +1,45 @@
 #include<stdio.h>
-#include<stdlib.h>
 #include<conio.h>
+#include<stdlib.h>
 
-int a[20][20], q[20], visited[20], n, f = 0, r = 1;
-int i, j;  // Declare i and j globally
+int a[20][20], q[20], visited[20], n, i, j, f = 0, r = -1;
 
 void bfs(int v) {
-    q[r++] = v;  // Enqueue the starting vertex
-    visited[v] = 1;  // Mark the starting vertex as visited
-
-    while(f < r) {
-        v = q[f++];  // Dequeue a vertex from the queue
-        printf("%d ", v);  // Print the vertex
-
-        for(i = 1; i <= n; i++) {
-            if(a[v][i] == 1 && !visited[i]) {  // If there is an edge and the vertex is not visited
-                q[r++] = i;  // Enqueue the vertex
-                visited[i] = 1;  // Mark the vertex as visited
-            }
+    for (i = 1; i <= n; i++) {
+        if (a[v][i] && !visited[i]) {
+            q[++r] = i;
         }
+    }
+    if (f <= r) {
+        visited[q[f]] = 1;
+        bfs(q[f++]);
     }
 }
 
 void main() {
-    int v;  // Declare v inside the main function
+    int v;
     printf("\nEnter the number of vertices: ");
     scanf("%d", &n);
-
-    for(i = 1; i <= n; i++) {
-        q[i] = 0;  // Initialize the queue
-        visited[i] = 0;  // Initialize the visited array
+    for (i = 1; i <= n; i++) {
+        q[i] = 0;
+        visited[i] = 0;
     }
-
     printf("\nEnter graph data in matrix form:\n");
-    for(i = 1; i <= n; i++) {
-        for(j = 1; j <= n; j++) {
-            scanf("%d", &a[i][j]);  // Read the adjacency matrix
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= n; j++) {
+            scanf("%d", &a[i][j]);
         }
     }
-
     printf("\nEnter the starting vertex: ");
-    scanf("%d", &v);  // Get the starting vertex
-
-    printf("\nThe nodes which are reachable are: \n");
-    bfs(v);  // Call BFS starting from vertex v
-
-    printf("\n");
-    for(i = 1; i <= n; i++) {
-        if(visited[i]) {
-            printf("%d ", i);  // Print reachable nodes
+    scanf("%d", &v);
+    bfs(v);
+    printf("\nThe nodes which are reachable are:\n");
+    for (i = 1; i <= n; i++) {
+        if (visited[i]) {
+            printf("%d\t", i);
+        } else {
+            printf("\nBFS is not possible");
         }
     }
-    if (f == r) {  // If the queue is empty and no nodes were reachable
-        printf("\nBFS is not possible\n");
-    }
-
-    getch();  // Wait for user input before closing (optional in some environments)
+    getch();
 }
